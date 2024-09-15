@@ -16,16 +16,9 @@ bookCollection.extend(newBooks)
 print(bookCollection)
 
 print("Lord of the Rings trilogy: ")
-for i in bookCollection:
-    if i == "The Fellowship of the King":
-        bookCollection[i] = i.replace("The Fellowship of the King", "Lord of the Rings: The Fellowship of the Ring")
-        print(bookCollection[i])
-    elif i == "The Two Towers":
-        bookCollection[i] = i.replace("The Two Towers", "Lord of the Rings: The Two Towers")
-        print(bookCollection[i])
-    elif i == "The Return of the King":
-        bookCollection[i] = i.replace("The Return of the King", "Lord of the Rings: The Return of the King")
-        print(bookCollection[i])
+bookCollection = [book.replace("The Fellowship of the Ring", "Lord of the Rings: The Fellowship of the Ring") for book in bookCollection]
+bookCollection = [book.replace("The Two Towers", "Lord of the Rings: The Two Towers") for book in bookCollection]
+bookCollection = [book.replace("The Return of the King", "Lord of the Rings: The Return of the King") for book in bookCollection]
 
 #for i in range(2, 5):
 #    print("Lord of the Rings: " + bookList[i])
