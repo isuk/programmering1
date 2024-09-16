@@ -20,9 +20,6 @@ bookCollection = [book.replace("The Fellowship of the Ring", "Lord of the Rings:
 bookCollection = [book.replace("The Two Towers", "Lord of the Rings: The Two Towers") for book in bookCollection]
 bookCollection = [book.replace("The Return of the King", "Lord of the Rings: The Return of the King") for book in bookCollection]
 
-#for i in range(2, 5):
-#    print("Lord of the Rings: " + bookList[i])
-
 bookCollection.sort()
 print("List sorted alphabetically: ")
 print(bookCollection)
