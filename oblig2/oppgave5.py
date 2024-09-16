@@ -1,11 +1,11 @@
 import random
 
-rounds = 0
 #i = 0
 #while i <= 2:
 #    print(random.randrange(0, 60))
 #    i +=1
 
+rounds = 0
 players = int(input("How many players: "))
 
 while rounds < players:
