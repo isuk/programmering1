@@ -30,7 +30,7 @@ def addFilm(list, name, year, rating):
             "rating": rating
         }
 
-        list.append[nameIn]
+        list.append[newDictionary]
 
     #Check if user wants to add another film    
     uInput = input.lower(("Would you like to add another film? y/n"))
