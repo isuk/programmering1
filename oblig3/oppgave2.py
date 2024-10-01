@@ -1,11 +1,8 @@
 import random
 
 def randNum():
-    #print(random.randrange(0, 101))
-    random.randrange(0, 101)
+    print("====")
+    print(f"={random.randint(0, 101)}=")
+    print("====")
 
-generatedNumber = randNum()
-
-print("====")
-print(f"={generatedNumber}=")
-print("====")
+randNum()
