@@ -107,7 +107,7 @@ while programRunning:
         nameIn = input("What movie would you like to add?\n")
         nameIn.lower()
         yearIn = int(input("What year was it released?\n"))
-        ratingIn = input("What was it's ratings?\n")
+        ratingIn = float(input("What was it's ratings?\n"))
 
         if ratingIn == "":
             ratingIn = 5.0
