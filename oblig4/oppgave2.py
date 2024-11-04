@@ -24,10 +24,12 @@ def shuffle_deck(deck):
     # Main program
 deck = makeDeck()
 shuffledDeck = shuffle_deck(deck)
-#print_deck(shuffledDeck)
 
 running = True
 while running:
     print("Black Jack!")
     playerChips = pChips(100)
     uInput = input(f"You currently have {playerChips.countChips()} chips. How many would you like to bet?")
+    # Add logic to handle the user's input
+    bet_amount = int(uInput)
+    # Rest of the game logic
