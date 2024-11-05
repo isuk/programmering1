@@ -2,7 +2,7 @@ import cardConstructor as cardCons
 import playerChips as pChips
 import random
 
-def makeDeck():
+def make_deck():
     # Define the suits and ranks
     suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
     ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
@@ -22,7 +22,7 @@ def shuffle_deck(deck):
     return deck
 
     # Main program
-deck = makeDeck()
+deck = make_deck()
 shuffledDeck = shuffle_deck(deck)
 
 running = True
