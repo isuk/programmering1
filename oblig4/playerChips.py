@@ -1,17 +1,17 @@
 class playerChips:
-    def __init__(self, starterChips):
+    def __init__(self, starterChips: int):
         self.sumChips = starterChips
     
-    def betChips(self, amount):
+    def betChips(self, amount: int):
         if amount > self.sumChips:
             print("You don't have enough chips to bet that much.")
         else:
             self.sumChips -= amount
-            print(f"You bet {amount} chips. You now have {self.sumChips} chips.")
+            return amount
 
-    def winChips(self, amount):
+    def winChips(self, amount: int):
         self.sumChips += amount
-        print(f"You won {amount} chips. You now have {self.sumChips} chips.")
+        return(f"You won {amount} chips. You now have {self.sumChips} chips.")
 
     def countChips(self):
         return self.sumChips

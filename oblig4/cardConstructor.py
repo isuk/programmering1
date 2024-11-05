@@ -3,6 +3,6 @@ class card:
         self.suit = suit
         self.rank = rank
         
-    # Using __repr__ to represent the string values of the card objects
-    def __repr__(self):
+    # Using __str__ to represent the string values of the card objects
+    def __str__(self):
         return f"{self.rank} of {self.suit}"
