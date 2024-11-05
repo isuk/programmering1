@@ -14,7 +14,7 @@ def make_deck():
     # Function for printing the deck
 def print_deck(deck):
     for card in deck:
-        print(card)
+        return(card)
 
     # Function for shuffling the deck
 def shuffle_deck(deck):
@@ -25,6 +25,31 @@ def shuffle_deck(deck):
 def draw_card(deckToDrawFrom):
     return deckToDrawFrom.pop()
 
+
+    # Convert face and ace card and then check for bust
+def checkForBust(hand):
+    handTotal = 0
+    for card in hand:
+        if card.rank in ["Jack", "Queen", "King"]:
+            handTotal += 10
+        elif card.rank == "Ace":
+            handTotal += 11
+        else:
+            handTotal += card.rank
+
+    aceCount = 0
+    for card in hand:
+        if card.rank == "Ace":
+            aceCount += 1
+
+    for aces in range(aceCount):
+        if handTotal > 21:
+            handTotal -= 10 
+            
+    if handTotal > 21:
+        print("Bust!")
+        running = False
+
     # Main program
 deck = make_deck()
 shuffledDeck = shuffle_deck(deck)
@@ -32,7 +57,9 @@ shuffledDeck = shuffle_deck(deck)
     # Set start chips amount and global values
 playerChips = pChips(100)
 playerHand = []
+dealerHand = []
 firstRound = True
+gameRound = 0
 
 print("Black Jack!")
 
@@ -41,12 +68,15 @@ uInput = input(f"You currently have {playerChips.countChips()} chips. How many w
 betAmount = playerChips.betChips(int(uInput))
 sumAmount = playerChips.countChips()
 print(f"You bet {betAmount} and have now {sumAmount} chips left.")
+print("")
 
 running = True
 while running:
         # Start game
         # Draw two cards on start round
-    if firstRound == True:
+    print(f"Current round: {gameRound}")
+    print("")
+    if gameRound == 0:
         for i in range(2):
             playerHand.append(draw_card(shuffledDeck))
         # Draw one card on every other round
@@ -56,11 +86,21 @@ while running:
         # Print player hand
     for card in playerHand:
         print(f"You drew: {card}")
+        print("------------------------")
 
-        # Stop dealer from drawing two cards in the start
-    firstRound = False
+    dealerHand.append(draw_card(shuffledDeck))
+    for card in dealerHand:
+        print("________________________")
+        print(f"Dealer drew: {card}")
 
+    checkForBust(playerHand)
 
+    gameRound += 1
+
+    playerHand
+
+    print("")
     running = input("Continue? y/n: ")
+    print("")
     if running == "n":
         running = False
