@@ -37,16 +37,18 @@ def checkForBust(hand):
             handTotal += 11
             aceCount += 1
         else:
-            handTotal += card.rank
+            handTotal += int(card.rank)
 
         # If you have more than one ace, set the value of it to 1
     for aces in range(aceCount):
         if handTotal > 21:
             handTotal -= 10 
+
         # Check if you have a bust    
     if handTotal > 21:
-        print("Bust!")
-        running = False
+        print(f"Bust! Hand's total is: {handTotal}")
+
+    return(handTotal)
 
     # Main program
 deck = make_deck()
@@ -70,8 +72,7 @@ print("")
 
 running = True
 while running:
-        # Start game
-        # Draw two cards on start round
+        # Start game and draw two cards
     print(f"Current round: {gameRound}")
     print("")
     if gameRound == 0:
@@ -85,13 +86,19 @@ while running:
     for card in playerHand:
         print(f"You drew: {card}")
         print("------------------------")
+    
+    print("Your hand total: ", end=" ")
+    print(checkForBust(playerHand))
 
+    # The dealers hand
     dealerHand.append(draw_card(shuffledDeck))
     for card in dealerHand:
-        print("________________________")
-        print(f"Dealer drew: {card}")
+        if checkForBust(dealerHand) < 17 or False:
+            print("________________________")
+            print(f"Dealer drew: {card}")
 
-    checkForBust(playerHand)
+    print("Dealer hand total: ", end=" ")
+    print(checkForBust(dealerHand))
 
     gameRound += 1
 
