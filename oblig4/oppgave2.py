@@ -29,23 +29,21 @@ def draw_card(deckToDrawFrom):
     # Convert face and ace card and then check for bust
 def checkForBust(hand):
     handTotal = 0
+    aceCount = 0
     for card in hand:
         if card.rank in ["Jack", "Queen", "King"]:
             handTotal += 10
         elif card.rank == "Ace":
             handTotal += 11
+            aceCount += 1
         else:
             handTotal += card.rank
 
-    aceCount = 0
-    for card in hand:
-        if card.rank == "Ace":
-            aceCount += 1
-
+        # If you have more than one ace, set the value of it to 1
     for aces in range(aceCount):
         if handTotal > 21:
             handTotal -= 10 
-            
+        # Check if you have a bust    
     if handTotal > 21:
         print("Bust!")
         running = False
