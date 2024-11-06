@@ -47,7 +47,7 @@ def getHandTotalValue(hand):
 
     return(handTotal)
 
-    # Main program
+    # Create deck and shuffle it
 deck = make_deck()
 shuffledDeck = shuffle_deck(deck)
 
@@ -57,25 +57,27 @@ playerHand = []
 dealerHand = []
 gameRound = 1
 
+betValid = True
+running = True
+
 print("Let's play Black Jack!")
 print("-------------------------")
 
-running = True
 while running:
         # Give player choise to bet
     if gameRound == 1:
-        uInput = input(f"You currently have {playerChips.countChips()} chips. How many would you like to bet? ")
+        while betValid:
+            betInput = input(f"You currently have {playerChips.countChips()} chips. How many would you like to bet? ")
+            betAmount = int(betInput)
 
-        betAmount = playerChips.betChips(int(uInput))
-
-        if betAmount > playerChips.countChips():
-            print("You don't have that many chips.")
-            
-
-        sumAmount = playerChips.countChips()
-
-        print(f"You bet {betAmount} and have now {sumAmount} chips left.")
-        print("")
+                # Check if player has enough chips
+            if betAmount > playerChips.countChips():
+                print("You don't have that many chips. Try again.")
+            else:
+                playerChips.betChips(betAmount)
+                print(f"You bet {betAmount} and have now {playerChips.countChips()} chips left.")
+                print("")
+                betValid = False
 
         # Start game and draw two cards
     print(f"Current round: {gameRound}")
@@ -99,6 +101,7 @@ while running:
     print(f"Dealer drew: {dealerHand[0]}")
     print("------------------------")
 
+        # Check if player got a blackjack
     if getHandTotalValue(playerHand) == 21:
         print("Black Jack! You win!")
         print(playerChips.winChips(betAmount + betAmount * 2))
@@ -106,6 +109,7 @@ while running:
 
     gameRound += 1
 
+    # Give the player a choice to hit or stand
     running = input("Hit or stand? h/s: ")
     print("")
     if running == "s":
@@ -113,15 +117,16 @@ while running:
         print(getHandTotalValue(playerHand))
         print("\033[39m")        
 
-        #print(f"The dealer reveals the face down card: {dealerHand.append(draw_card(shuffledDeck))}")
-
+            # Check if the dealer has under 14, then draw cards until he does
         while getHandTotalValue(dealerHand) < 17:
             dealerHand.append(draw_card(shuffledDeck))
-            
+
+            # Print dealer's hand
         print("------------------------")
         for card in dealerHand:
             print(f"Dealer drew: {card}")
         
+            # Print the dealer's total hand value
         print(f"{Fore.RED}Dealer hand total is: {getHandTotalValue(dealerHand)}")
         print("\033[39m", end="")
         print("------------------------")
@@ -132,26 +137,34 @@ while running:
             print(playerChips.winChips(betAmount * 2))
             playAgain = input("Play another game? y/n")
 
+            # Check if player hand and dealer hand are equal
         elif getHandTotalValue(playerHand) == getHandTotalValue(dealerHand):
             print("It's a Tie! You recieved your bet back.")
             playerChips.winChips(betAmount)
             playAgain = input("Play another game? y/n")
 
+            # If player didn't win, tell them they lost, how much they lost, if they wants to play again
         else:
             print("You lose!")
             print(f"You lost {betAmount} chips.")
             playAgain = input("Play another game? y/n")
 
+            # Check if player wants to play again
         if playAgain == "y":
+
+                # Clear all lists, hands and variables to start a new game
             playerHand.clear()
             dealerHand.clear()
             shuffledDeck.clear()
             deck.clear()
 
+                # Create a new deck and shuffle it, then start a new round
             deck = make_deck()
             shuffledDeck = shuffle_deck(deck)
 
+                #resets round count
             gameRound = 1
 
+            # Close program if player doesn't want to play
         else:
             running = False
