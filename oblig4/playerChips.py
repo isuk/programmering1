@@ -3,9 +3,6 @@ class playerChips:
         self.sumChips = starterChips
     
     def betChips(self, amount: int):
-        if amount > self.sumChips:
-            print("You don't have enough chips to bet that much.")
-        else:
             self.sumChips -= amount
             return amount
 

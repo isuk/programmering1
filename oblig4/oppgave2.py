@@ -1,6 +1,7 @@
 import cardConstructor as cardCons
 from playerChips import playerChips as pChips
 import random
+from colorama import Fore
 
 def make_deck():
     # Define the suits and ranks
@@ -27,7 +28,7 @@ def draw_card(deckToDrawFrom):
 
 
     # Convert face and ace card and then check for bust
-def checkForBust(hand):
+def getHandTotalValue(hand):
     handTotal = 0
     aceCount = 0
     for card in hand:
@@ -44,10 +45,6 @@ def checkForBust(hand):
         if handTotal > 21:
             handTotal -= 10 
 
-        # Check if you have a bust    
-    if handTotal > 21:
-        print(f"Bust! Hand's total is: {handTotal}")
-
     return(handTotal)
 
     # Main program
@@ -58,24 +55,32 @@ shuffledDeck = shuffle_deck(deck)
 playerChips = pChips(100)
 playerHand = []
 dealerHand = []
-firstRound = True
-gameRound = 0
+gameRound = 1
 
-print("Black Jack!")
-
-    # Give player choise to bet
-uInput = input(f"You currently have {playerChips.countChips()} chips. How many would you like to bet? ")
-betAmount = playerChips.betChips(int(uInput))
-sumAmount = playerChips.countChips()
-print(f"You bet {betAmount} and have now {sumAmount} chips left.")
-print("")
+print("Let's play Black Jack!")
+print("-------------------------")
 
 running = True
 while running:
+        # Give player choise to bet
+    if gameRound == 1:
+        uInput = input(f"You currently have {playerChips.countChips()} chips. How many would you like to bet? ")
+
+        betAmount = playerChips.betChips(int(uInput))
+
+        if betAmount > playerChips.countChips():
+            print("You don't have that many chips.")
+            
+
+        sumAmount = playerChips.countChips()
+
+        print(f"You bet {betAmount} and have now {sumAmount} chips left.")
+        print("")
+
         # Start game and draw two cards
     print(f"Current round: {gameRound}")
     print("")
-    if gameRound == 0:
+    if gameRound == 1:
         for i in range(2):
             playerHand.append(draw_card(shuffledDeck))
         # Draw one card on every other round
@@ -83,29 +88,70 @@ while running:
         playerHand.append(draw_card(shuffledDeck))
 
         # Print player hand
+    print("------------------------")
     for card in playerHand:
         print(f"You drew: {card}")
-        print("------------------------")
-    
-    print("Your hand total: ", end=" ")
-    print(checkForBust(playerHand))
 
-    # The dealers hand
-    dealerHand.append(draw_card(shuffledDeck))
-    for card in dealerHand:
-        if checkForBust(dealerHand) < 17 or False:
-            print("________________________")
-            print(f"Dealer drew: {card}")
+        # The dealer's hand
+    if gameRound == 1:
+        dealerHand.append(draw_card(shuffledDeck))
+    print("------------------------")
+    print(f"Dealer drew: {dealerHand[0]}")
+    print("------------------------")
 
-    print("Dealer hand total: ", end=" ")
-    print(checkForBust(dealerHand))
+    if getHandTotalValue(playerHand) == 21:
+        print("Black Jack! You win!")
+        print(playerChips.winChips(betAmount + betAmount * 2))
+        playAgain = input("Play another game? y/n")
 
     gameRound += 1
 
-    playerHand
+    running = input("Hit or stand? h/s: ")
+    print("")
+    if running == "s":
+        print(f"{Fore.GREEN}Your hand total: ", end=" ")
+        print(getHandTotalValue(playerHand))
+        print("\033[39m")        
 
-    print("")
-    running = input("Continue? y/n: ")
-    print("")
-    if running == "n":
-        running = False
+        #print(f"The dealer reveals the face down card: {dealerHand.append(draw_card(shuffledDeck))}")
+
+        while getHandTotalValue(dealerHand) < 17:
+            dealerHand.append(draw_card(shuffledDeck))
+            
+        print("------------------------")
+        for card in dealerHand:
+            print(f"Dealer drew: {card}")
+        
+        print(f"{Fore.RED}Dealer hand total is: {getHandTotalValue(dealerHand)}")
+        print("\033[39m", end="")
+        print("------------------------")
+
+            # Check total value of both hands and determine winner
+        if getHandTotalValue(playerHand) <= 21 and (getHandTotalValue(playerHand) > getHandTotalValue(dealerHand) or getHandTotalValue(dealerHand) > 21):
+            print("You win!")
+            print(playerChips.winChips(betAmount * 2))
+            playAgain = input("Play another game? y/n")
+
+        elif getHandTotalValue(playerHand) == getHandTotalValue(dealerHand):
+            print("It's a Tie! You recieved your bet back.")
+            playerChips.winChips(betAmount)
+            playAgain = input("Play another game? y/n")
+
+        else:
+            print("You lose!")
+            print(f"You lost {betAmount} chips.")
+            playAgain = input("Play another game? y/n")
+
+        if playAgain == "y":
+            playerHand.clear()
+            dealerHand.clear()
+            shuffledDeck.clear()
+            deck.clear()
+
+            deck = make_deck()
+            shuffledDeck = shuffle_deck(deck)
+
+            gameRound = 1
+
+        else:
+            running = False
