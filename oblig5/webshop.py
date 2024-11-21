@@ -1,8 +1,14 @@
 def print_ware_information(ware):
     '''Funksjonsbeskrivelse: Printer ut informasjon om en spesifisert vare.'''
+    for item in ware:
+        print(f"{item}: {ware[item]}")
 
 def calculate_average_ware_rating(ware):
     '''Returnerer den gjennomsnittlige ratingen for en spesifisert vare.'''
+    for rating in ware["ratings"]:
+        average_rating = sum(ware["ratings"]) / len(ware["ratings"])
+        round(average_rating, 1)
+        return average_rating
 
 def get_all_wares_in_stock(all_wares):
     '''Returnerer en dictionary med alle varer som er på lager.'''
@@ -10,11 +16,14 @@ def get_all_wares_in_stock(all_wares):
 def is_number_of_ware_in_stock(ware, number_of_ware):
     '''Returnerer en Boolean-verdi som representerer om et spesifisert antall av
     en gitt vare finnes på lager.'''
+    if ware["number_in_stock"] <= 0:
+        return False
 
 def add_number_of_ware_to_shopping_cart(ware_key, ware, shopping_cart,
 number_of_ware):
     '''Legger til et spesifisert antall av en gitt vare i en spesifisert
     handlevogn.'''
+    
 
 def calculate_shopping_cart_price(shopping_cart, all_wares, tax):
     '''Returnerer prisen av en handlevogn basert på varene i den.'''
