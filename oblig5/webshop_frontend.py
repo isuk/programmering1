@@ -21,16 +21,19 @@ all_wares = {
         "price": 349.0,
         "number_in_stock": 3,
         "ratings": [5.0, 5.0, 4.5, 5.0, 5.0, 5.0],
-        "description": "A high speed overprices HDMI cable!",
+        "description": "A high speed overpriced HDMI cable!",
     }
 }
 
     # Filtrer ut alle varer som er på lager og skriv ut informasjonen for hver av dem
 all_wares_in_stock = ws.get_all_wares_in_stock(all_wares)
+print("All wares in stock: ")
 for ware in all_wares_in_stock.values():
+    print("--------------------------------------------------")
     ws.print_ware_information(ware)
 
     # Skriv ut den gjennomsnittlige ratingen for denne varen
+    print("--------------------------------------------------")
 print(f"Average rating for the AMD Processor: {ws.calculate_average_ware_rating(all_wares['amd_processor'])}")
 print()
 
@@ -38,19 +41,20 @@ print()
 shopping_cart = {}
 
     # Forsøker å legge til 1 amd processor, 2 playstation 5 konsoller og 3 hdmi kabler
-ws.add_number_of_ware_to_shopping_cart("amd_processor",
-all_wares["amd_processor"], shopping_cart)
+ws.add_number_of_ware_to_shopping_cart("amd_processor", all_wares["amd_processor"], shopping_cart)
 
-ws.add_number_of_ware_to_shopping_cart ("playstation_5",
-all_wares["playstation_5"], shopping_cart, 2)
+ws.add_number_of_ware_to_shopping_cart ("playstation_5", all_wares["playstation_5"], shopping_cart, 2)
 
-ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"],
-shopping_cart, 4)
+ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"], shopping_cart, 4)
 
     # skriver ut handlevognen
-print()
-print(f"The shopping cart: {shopping_cart}")
-print()
+print("Shopping cart: ")
+print("--------------------------------------------------")
+for product, amount in shopping_cart.items():
+    print(f"Product: {product.replace('_', ' ').capitalize()}, Quantity: {amount}")
+print("--------------------------------------------------")
+
+print(ws.calculate_shopping_cart_price)
 
     # Oppretter en lommebok som inneholder 10000 kr
 wallet = Wallet(10000)
