@@ -35,10 +35,11 @@ def add_number_of_ware_to_shopping_cart(ware_key, ware, shopping_cart, number_of
 def calculate_shopping_cart_price(shopping_cart, all_wares, tax = 1.25):
     '''Returnerer prisen av en handlevogn basert på varene i den.'''
     sum_of_wares_in_cart = 0
-    
+    for cartWare, amount in shopping_cart.items():
+        if cartWare in all_wares:
+            sum_of_wares_in_cart += all_wares[cartWare]["price"] * amount
 
-    sum_with_tax = sum_of_wares_in_cart * tax
-    return sum_with_tax
+    return sum_of_wares_in_cart * tax
 
 def can_afford_shopping_cart(shopping_cart_price, wallet):
     '''Returnerer en Boolean-verdi basert på om det er nok penger i en gitt

@@ -51,17 +51,16 @@ ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"], s
 print("Shopping cart: ")
 print("--------------------------------------------------")
 for product, amount in shopping_cart.items():
-    print(f"Product: {product.replace('_', ' ').capitalize()}, Quantity: {amount}")
+    print(f"Product: {all_wares[product]['name']}, Quantity: {amount}")
 print("--------------------------------------------------")
 
-print(ws.calculate_shopping_cart_price)
+print(f"Total sum of shopping cart: {ws.calculate_shopping_cart_price(shopping_cart, all_wares)},-")
 
     # Oppretter en lommebok som inneholder 10000 kr
 wallet = Wallet(10000)
 
     # Forsøker å kjøpe varene i handlevognen
 ws.buy_shopping_cart('''Parameterne blir definert i oppgaven''')
-print()
 
 # Skriver ut mengden penger i lommeboka etter kjøpet
 print(f"The amount in the wallet after the purchase: {wallet.get_amount()}")
