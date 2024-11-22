@@ -36,6 +36,7 @@ NEW_CAR_REGISTRATION_FEE = 8745
 RENT_CAR_PERCENTAGE = 0.4
 RENT_NEW_CAR__FEE = 1000
 
+
 def print_car_information(car):
     # Oppgave 3.1
     print(f"Brand: {car['brand']}")
@@ -63,20 +64,49 @@ def create_car(car_register, brand, model, price, year, month, new, km):
 
 def get_car_age(car):
     # Oppgave 3.3
-    
-    pass
+    current_year = date.today().year
+    car_year = car['year']
+    car_age = current_year - car_year
+    return car_age
 
 def next_eu_control(car):
     # Oppgave 3.4
-    pass
+    current_month = date.today().month
+    current_year = date.today().year
+    car_month = car['month']
+    car_age = get_car_age(car)
+    if car_age % 2 == 0:
+        if current_month > car_month:
+            return date(current_year + 2, car_month, 1)
+        else:
+            return date(current_year, car_month, 1)
+    else:
+        return date(current_year + 1, car_month, 1)
+            
 
 def rent_car_monthly_price(car):
     # Oppgave 3.5
-    pass
+    year_price = car['price'] * RENT_CAR_PERCENTAGE
+    month_price = year_price / 12
+    car_condition_new = car['new']
+    if car_condition_new:
+        return round(month_price + RENT_NEW_CAR__FEE, 2)
+    else:
+        return round(month_price, 2)
 
 def calculate_total_price(car):
     # Oppgave 3.6
-    pass
+    car_age = get_car_age(car)
+    car_price = car['price']
+    if car['new']:
+        return car_price + 10783
+    else:
+        if car_age <= 3:
+            return car_price + 6681
+        elif car_age <= 11:
+            return car_price <= 29
+        else:
+            return car_price
 
 def is_new(car):
     return car['new']
