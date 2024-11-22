@@ -41,12 +41,13 @@ def print_car_information(car):
     # Oppgave 3.1
     print(f"Brand: {car['brand']}")
     print(f"Model: {car['model']}")
-    print(f"Price:{car['price']},-")
+    print(f"Price: {car['price']},-")
     print(f"Manufactured: 2012-8")
     if car['new']:
         print(f"Condition: New")
     else:
         print(f"Condition: Used")
+    print(f"Km: {car['km']}")
 
 def create_car(car_register, brand, model, price, year, month, new, km):
     # Oppgave 3.2
@@ -104,7 +105,7 @@ def calculate_total_price(car):
         if car_age <= 3:
             return car_price + 6681
         elif car_age <= 11:
-            return car_price <= 29
+            return car_price + 4034
         else:
             return car_price
 
@@ -117,11 +118,13 @@ if __name__ == '__main__':
     toyota = car_register['toyotaBZ4X']
     print_car_information(toyota)
 
-    print(f"\nThe total price for this {toyota['brand']} {toyota['model']} is {calculate_total_price(toyota)}kr.")
+    print(f"The total price for this {toyota['brand']} {toyota['model']} is {calculate_total_price(toyota)}kr.")
 
     print(f"Next EU-control for the {toyota['brand']} {toyota['model']} is {next_eu_control(toyota)}")
 
     print(f"If you want to rent the {toyota['brand']} {toyota['model']} the monthly fee will be {rent_car_monthly_price(toyota)}.")
+
+    print("")
 
     audi = car_register['audiRS3']
     print_car_information(audi)
